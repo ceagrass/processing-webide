@@ -11,3 +11,9 @@ v0.01
 Test it out with a simple server in this project's directory:
 
 	python -m SimpleHTTPServer
+
+TODO
+
+	- Add favicon.ico
+	- Handle invalid processing code
+	- Implement short term version control for undo functionality
