@@ -1,13 +1,57 @@
 <!doctype html>
 <html>
 <head>
-	<title>Processing WebIDE</title>
+	<title>WebIDE</title>
+  <link rel="stylesheet" href="style.css"/>
+
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1"/>
 </head>
 <body>
-	<p> This is the HTML5 Processing WebIDE (unofficial). </p>
-	<p> It leverages window.localStorage to save offline versions of your sketches </p>
-	<p> It also benefits from Processing.js to serve your sketches </p>
+  <h1>WebIDE</h1>
+  <div class="app-container" id="container">
+    <div class="top menu-bar">
+      <div class="action-group">
+        <button class="action">
+          File
+        </button>
+      </div>
+      <div class="action-group">
+        <button class="action">
+          Edit
+        </button>
+      </div>
+      <div class="action-group">
+        <button class="action">
+          Help
+        </button>
+      </div>
+    </div>
+    <div class="left side-bar">
+      <ul class="file-tree">
+        <li class="open file">
+          <a href="#">
+            helloWorld.pde
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="text-area">
+      <textarea id="fileInput"></textarea>
+    </div>
+    <div class="bottom menu-bar">
+      <div class="action-group">
+        <button class="action" id="saveAndLoad">
+          Save & Load sketch
+        </button>
+      </div>
+    </div>
+    <div class="preview-area">
+      <div class="preview" id="preview">
 
+      </div>
+    </div>
+    <div id="debug"></div>
+  </div>
 	<script src="processing.min.js"></script>
 	<script src="app.js"></script>
 </body>

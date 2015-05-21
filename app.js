@@ -1,11 +1,12 @@
 var app = function() {
-	var container = document.body;
+  var container;
+  container = document.getElementById("container");
 	var localStorage_key = "pide_code";
 
 	/*sendToConsole is an optional boolean argument; if true then send message to console instead*/
 	var debug = function() {
-		var debugEl = document.createElement("div");
-		document.body.appendChild(debugEl);
+    var debugEl;
+    debugEl = document.getElementById("debug");
 		return function(message, sendToConsole) {
 			if (sendToConsole) {
 				console.log(message);
@@ -22,7 +23,7 @@ var app = function() {
 		container: container,
 		debug: debug,
 		LS_KEY: localStorage_key
-	}
+	};
 }();
 
 /*Make sure that the app can be started properly*/
@@ -45,10 +46,6 @@ if (errorOccured) {
 
 //Need an inputArea; somewhere to type processing code
 app.inputArea = function(inputEl) {
-	app.container.appendChild(inputEl);
-	inputEl.style.width = "515px";
-	inputEl.style.height = "300px";
-
 	function get() {
 		var content = "";
 		content += inputEl.value;
@@ -68,7 +65,7 @@ app.inputArea = function(inputEl) {
 
 		app.container.appendChild(el);
 		return el;
-	}(document.createElement("button"));
+	}(document.getElementById("saveAndLoad"));
 
 	return {
 		el: inputEl,
@@ -82,11 +79,14 @@ app.inputArea = function(inputEl) {
 			return content;
 		}
 	}
-}(document.createElement("textarea"));
+}(document.getElementById("fileInput"));
 //Need an outputArea; somewhere to display the processing output
 app.outputArea = function(outputEl) {
+  var outputContainer;
+  outputContainer = document.getElementById("preview");
+	outputContainer.appendChild(outputEl);
+
 	outputEl.id = "myCanvas";
-	app.container.appendChild(outputEl);
 
 	return {
 		el: outputEl,
