@@ -27,9 +27,12 @@ var required = {
 };
 for (var key in required) {
   if (!required[key]) {
-    app.debug(key + " failed to load.");
+    app.debug("[ERR]: " + key + " is unavailable. Aborting.");
+    required.pass = false;
+    break;
   } else {
-    app.debug(key + " loaded.");
+    app.debug("[OK]: " + key + " loaded.");
+    required.pass = true;
   }
 }
 
@@ -51,6 +54,9 @@ saveButton.addEventListener("click", function(e) {
   window.location.href = "";
 });
 
+//Need to load the worker so that we can process the processing sketches
+var processingWorker = new Worker("processingWorker.js");
+
 //Need an outputArea; somewhere to display the processing output
 app.outputArea = {};
 app.outputArea.container = document.getElementById("preview");
@@ -70,6 +76,9 @@ app.outputArea.set = function(processingCode, cnvEl) {
   }
 
   console.log(processingCode);
+  //TODO: Send sketch compilation and instancing to web worker
+  processingWorker.postMessage([processingCode]);
+
   //Create a sketch from the code
   var sketch = Processing.compile(processingCode);
   //TODO: Check sketch for errors
@@ -85,9 +94,11 @@ app.outputArea.set = function(processingCode, cnvEl) {
 if (window.localStorage.getItem(app.LS_KEY) === null) {
   window.localStorage.setItem(app.LS_KEY, "");
 }
-//START THE APP by loading the last saved processing code from localStorage
-var code = app.loadCode();
-//Load the processing code from localStorage into the textArea
-app.inputArea.set(code);
-//Load the processing code from the textarea into the outputArea
-app.outputArea.set(code, app.outputArea.el);
+if (required.pass) {
+  //START THE APP by loading the last saved processing code from localStorage
+  var code = app.loadCode();
+  //Load the processing code from localStorage into the textArea
+  app.inputArea.set(code);
+  //Load the processing code from the textarea into the outputArea
+  app.outputArea.set(code, app.outputArea.el);
+}
