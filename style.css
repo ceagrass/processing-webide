@@ -39,3 +39,38 @@ html, body {
   outline-width: 2px;
 }
 
+#fileInput {
+  width: 550px;
+  height: 300px;
+}
+#preview {
+  position: absolute;
+  top: 35px;
+  padding-top: 120px;
+  left: 150px;
+  border: 1px solid black;
+  opacity: 0.5;
+  transition: opacity 0.1s;
+}
+#preview a {
+  
+}
+#preview a::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100px;
+  background: blue;
+  content: "";
+}
+#preview:hover {
+  opacity: 1;
+  border: 0;
+  transition: opacity 0.1s;
+}
+#preview:target {
+  z-index: 50;
+  opacity: 1;
+  border: 0;
+}

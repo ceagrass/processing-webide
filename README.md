@@ -17,3 +17,4 @@ TODO
 	- Add favicon.ico
 	- Handle invalid processing code
 	- Implement short term version control for undo functionality
+  - Add CodeMirror as a git submodule

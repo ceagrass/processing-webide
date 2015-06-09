@@ -101,4 +101,25 @@ if (required.pass) {
   app.inputArea.set(code);
   //Load the processing code from the textarea into the outputArea
   app.outputArea.set(code, app.outputArea.el);
+  
+  /*
+  var codeMirror = CodeMirror(function(elt) {
+    app.inputArea.parentNode.replaceChild(elt, app.inputArea);
+  }.
+  {
+    value: app.inputArea.value
+  });
+  */
+  var tempVal = app.inputArea.get();
+  app.codeMirror = CodeMirror.fromTextArea(app.inputArea.el);
+  app.inputArea.set(tempVal);
+  app.inputArea.get = function() {
+    return "" + app.codeMirror.getValue();
+  };
+  app.inputArea.set = function(content) {
+    app.codeMirror.setValue(content);
+
+    return content;
+  };
+
 }
