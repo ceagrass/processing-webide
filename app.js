@@ -121,5 +121,54 @@ if (required.pass) {
 
     return content;
   };
+  app.codeMirror.setSize("100%", "100%");
+  //Add the canvas download functionality
+  app.outputArea.el.ondblclick = function(e) {
+    console.log("downloading");
+    canvasDownload(this);
+  };
 
+}
+
+function canvasDownload(canvas) {
+  var image64,
+  image_data,
+  arraybuffer,
+  view,
+  blob,
+  bb,
+  url;
+
+  image64 = canvas.toDataURL();
+  // atob to base64_decode the data-URI
+  image_data = atob(image64.split(',')[1]);
+  // Use typed arrays to convert the binary data to a Blob
+  arraybuffer = new ArrayBuffer(image_data.length);
+  view = new Uint8Array(arraybuffer);
+  for (var i = 0; i < image_data.length; i++) {
+    view[i] = image_data.charCodeAt(i) & 0xff;
+  }
+  try {
+    // This is the recommended method:
+    var blob = new Blob([arraybuffer], {
+      type: "application/octet-stream"
+    });
+    var blob = new Blob([arraybuffer], {
+      type: "image/jpeg"
+    });
+  } catch (e) {
+    // The BlobBuilder API has been deprecated in favour of
+    // Blob, but older browsers don't know about the Blob
+    // constructor
+    // IE10 also supports BlobBuilder, but since the `Blob`
+    // constructor also works, there's no need to add
+    // `MSBlobBuilder`
+    bb = new (window.WebKitBlobBuilder || window.MozBlobBuilder);
+    bb.append(arraybuffer);
+    blob = bb.getBlob("application/octet-stream");
+  }
+  url = (window.webkitURL || window.URL).createObjectURL(blob);
+  //location.href = url;  // <-- Download!!
+  var win = window.open(url, "_blank");
+  win.focus();
 }
